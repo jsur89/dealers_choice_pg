@@ -1,0 +1,28 @@
+{
+  "name": "dealers_choice_pg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsur89/dealers_choice_pg.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsur89/dealers_choice_pg/issues"
+  },
+  "homepage": "https://github.com/jsur89/dealers_choice_pg#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
