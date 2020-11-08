@@ -1,15 +1,40 @@
-//Bring in the Postgress library
-const pg = require("pg");
+const pg = require("pg"); //Bring in the Postgress library
 
 //Here is where express fits in...
 const express = require("express");
+const path = require("path");
 const app = express();
+
+app.use("/assets", express.static(path.join(__dirname, "assets"))); //set up a stattic path
 
 //configuring the express pipeline
 app.get("/", async (req, res, next) => {
   try {
     const response = await client.query('SELECT * FROM "Sport";'); //the response that we're getting from our Postgress Server.
-    res.send(response.rows);
+    const sports = response.rows;
+    res.send(`
+        <html>
+            <head>
+                <link rel='stylesheet' href='/assets/styles.css' />
+            </head>
+            <body>
+                <h1>Cards World</h1>
+                <h2>Sports</h2>
+                <ul>
+                    ${sports
+                      .map(
+                        (sport) => `
+                        <li>
+                        <a href='/brands/${sports.id}'>
+                            ${sport.name}
+                            </a>
+                        </li>`
+                      )
+                      .join("")}
+                </ul>
+            </body>
+        </html>
+    `);
   } catch (ex) {
     next(ex);
   }
