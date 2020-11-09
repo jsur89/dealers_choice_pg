@@ -1,4 +1,4 @@
-const { client, syncAndSeed } = require("./db");
+const { client, syncAndSeed } = require("./db/index.js");
 
 //Here is where express fits in...
 const express = require("express");
