@@ -1,4 +1,5 @@
-const pg = require("pg"); //Bring in the Postgress library
+const pg = require("pg");
+
 const client = new pg.Client("postgress://localhost/cards_db");
 
 const syncAndSeed = async () => {
