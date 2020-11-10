@@ -25,12 +25,37 @@ app.get("/", async (req, res, next) => {
                       .map(
                         (sport) => `
                         <li>
-                        <a href='/brands/${sports.id}'>
+                        <a href='/sport/${sports.id}'>
                             ${sport.name}
                             </a>
                         </li>`
                       )
                       .join("")}
+                </ul>
+            </body>
+        </html>
+    `);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
+app.get("/sports/:id", async (req, res, next) => {
+  try {
+    const response = await client.query(
+      'SELECT * FROM "Sport" WHERE sport_id=$1;',
+      [req.params.id]
+    ); //the response that we're getting from our Postgress Server.
+    const sports = response.rows[0];
+    res.send(`
+        <html>
+            <head>
+                <link rel='stylesheet' href='/assets/styles.css' />
+            </head>
+            <body>
+                <h1>Cards World</h1>
+                <h2><a href='/'>Sports</a> (${sports.name}) </h2>
+                <ul>
                 </ul>
             </body>
         </html>
