@@ -10,10 +10,19 @@ app.use("/assets", express.static(path.join(__dirname, "assets"))); //set up a s
 //configuring the express pipeline
 app.get("/sport/:id", async (req, res, next) => {
   try {
-    const response = await client.query('SELECT * FROM "Sport" WHERE id=$1;', [
+    let response = await client.query('SELECT * FROM "Sport" WHERE id=$1;', [
       req.params.id,
     ]); //the response that we're getting from our Postgress Server.
+
     const sports = response.rows[0]; //what does [0] do??
+
+    response = await client.query(
+      'SELECT * FROM "Athlete" WHERE sport_id=$1;',
+      [req.params.id]
+    ); //the response that we're getting from our Postgress Server.
+
+    const athletes = response.rows;
+
     res.send(`
         <html>
             <head>
@@ -23,6 +32,15 @@ app.get("/sport/:id", async (req, res, next) => {
                 <h1>Cards World</h1>
                 <h2><a href='/'>Sports</a> (${sports.name})</h2>
                 <ul>
+                ${athletes
+                  .map(
+                    (athlete) => `
+                  <li>
+                  ${athlete.name}
+                  </li>
+                  `
+                  )
+                  .join("")}
                 </ul>
             </body>
         </html>
