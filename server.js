@@ -30,7 +30,7 @@ app.get("/sport/:id", async (req, res, next) => {
             </head>
             <body>
                 <h1>Cards World</h1>
-                <h2><a href='/'>Sports</a> (${sports.name})</h2>
+                <h2><a href='/'>Sports</a>(${sports.name})</h2>
                 <ul>
                 ${athletes
                   .map(
