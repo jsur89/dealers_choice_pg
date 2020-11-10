@@ -1,4 +1,4 @@
-const { client, syncAndSeed } = require("./db/index.js");
+const { client, syncAndSeed } = require("./db");
 
 //Here is where express fits in...
 const express = require("express");
@@ -8,6 +8,30 @@ const app = express();
 app.use("/assets", express.static(path.join(__dirname, "assets"))); //set up a stattic path
 
 //configuring the express pipeline
+app.get("/sport/:id", async (req, res, next) => {
+  try {
+    const response = await client.query('SELECT * FROM "Sport" WHERE id=$1;', [
+      req.params.id,
+    ]); //the response that we're getting from our Postgress Server.
+    const sports = response.rows[0]; //what does [0] do??
+    res.send(`
+        <html>
+            <head>
+                <link rel='stylesheet' href='/assets/styles.css' />
+            </head>
+            <body>
+                <h1>Cards World</h1>
+                <h2><a href='/'>Sports</a> (${sports.name})</h2>
+                <ul>
+                </ul>
+            </body>
+        </html>
+    `);
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 app.get("/", async (req, res, next) => {
   try {
     const response = await client.query('SELECT * FROM "Sport";'); //the response that we're getting from our Postgress Server.
@@ -25,37 +49,12 @@ app.get("/", async (req, res, next) => {
                       .map(
                         (sport) => `
                         <li>
-                        <a href='/sport/${sports.id}'>
+                        <a href='/sport/${sport.id}'>
                             ${sport.name}
                             </a>
                         </li>`
                       )
                       .join("")}
-                </ul>
-            </body>
-        </html>
-    `);
-  } catch (ex) {
-    next(ex);
-  }
-});
-
-app.get("/sports/:id", async (req, res, next) => {
-  try {
-    const response = await client.query(
-      'SELECT * FROM "Sport" WHERE sport_id=$1;',
-      [req.params.id]
-    ); //the response that we're getting from our Postgress Server.
-    const sports = response.rows[0];
-    res.send(`
-        <html>
-            <head>
-                <link rel='stylesheet' href='/assets/styles.css' />
-            </head>
-            <body>
-                <h1>Cards World</h1>
-                <h2><a href='/'>Sports</a> (${sports.name}) </h2>
-                <ul>
                 </ul>
             </body>
         </html>
