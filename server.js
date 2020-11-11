@@ -15,13 +15,12 @@ app.get("/sport/:id", async (req, res, next) => {
     ]); //the response that we're getting from our Postgress Server.
 
     const sports = response.rows[0]; //what does [0] do??
+    const athletes = response.rows;
 
     response = await client.query(
       'SELECT * FROM "Athlete" WHERE sport_id=$1;',
       [req.params.id]
     ); //the response that we're getting from our Postgress Server.
-
-    const athletes = response.rows;
 
     res.send(`
         <html>
