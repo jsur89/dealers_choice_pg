@@ -10,12 +10,16 @@ app.use("/assets", express.static(path.join(__dirname, "assets"))); //set up a s
 //configuring the express pipeline
 app.get("/sport/:id", async (req, res, next) => {
   try {
-    let response = await client.query('SELECT * FROM "Sport" WHERE id=$1;', [
-      req.params.id,
-    ]); //the response that we're getting from our Postgress Server.
+    const promises = [
+      client.query('SELECT * FROM "Sport" WHERE id=$1;', [req.params.id]),
+      client.query('SELECT * FROM "Athlete" WHERE sport_id=$1;', [
+        req.params.id,
+      ]),
+    ];
 
-    const sports = response.rows[0]; //what does [0] do??
-    const athletes = response.rows;
+    const [sportsResponse, athletesResponse] = await Promise.all(promises);
+    const sports = sportsResponse.rows[0];
+    const athletes = athletesResponse.rows;
 
     response = await client.query(
       'SELECT * FROM "Athlete" WHERE sport_id=$1;',
