@@ -65,7 +65,7 @@ app.get("/", async (req, res, next) => {
             <body>
                 <h1>Cards World</h1>
                 <h2>Sports</h2>
-                <ul>
+                <ul class="tooltip">
                     ${sports
                       .map(
                         (sport) => `
@@ -76,6 +76,7 @@ app.get("/", async (req, res, next) => {
                         </li>`
                       )
                       .join("")}
+                      <span class="tooltiptext">Click Me</span>
                 </ul>
             </body>
         </html>

@@ -1,4 +1,61 @@
 body {
   font-family: verdana;
   padding: 1rem;
+  background-color: bisque;
+}
+h1 {
+  color: #4281a4;
+}
+
+h2 {
+  color: #4281a4;
+}
+
+li{
+  font-family: "Comic Sans MS"
+  padding: 1rem;
+  color:#9CAFB7
+}
+
+a{
+  color:#0E4749
+}
+a:hover{
+  background-color: rgba(0, 255, 0, 0.735);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
