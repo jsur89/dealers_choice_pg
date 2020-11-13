@@ -2,6 +2,9 @@ body {
   font-family: verdana;
   padding: 1rem;
   background-color: bisque;
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
 }
 h1 {
   color: #4281a4;
